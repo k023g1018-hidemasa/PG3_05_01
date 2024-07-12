@@ -1,7 +1,8 @@
 #include <Novice.h>
-#include"GameManager.h"
+#include"NewStageScene.h"
 
-const char kWindowTitle[] = "学籍番号";
+
+const char kWindowTitle[] = "GC2B_15_ヒラジマ_ヒデマサ＿MT3";
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -9,13 +10,52 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
-	//GameManager* gameManager = new GameManager;
-	std::unique_ptr<GameManager>gameManager = std::make_unique<GameManager>();
+	// キー入力結果を受け取る箱
+	char keys[256] = { 0 };
+	char preKeys[256] = { 0 };
+	StageScene* stageScene = new StageScene;
 
-	gameManager->Run();
+	stageScene->Init();
 
-	//delete gameManager;
 
+	// ウィンドウの×ボタンが押されるまでループ
+	while (Novice::ProcessMessage() == 0) {
+		// フレームの開始
+		Novice::BeginFrame();
+
+		// キー入力を受け取る
+		memcpy(preKeys, keys, 256);
+		Novice::GetHitKeyStateAll(keys);
+
+		///
+		/// ↓更新処理ここから
+		///
+
+		stageScene->Update();
+
+		///
+		/// ↑更新処理ここまで
+		///
+
+		///
+		/// ↓描画処理ここから
+		///
+
+		stageScene->Draw();
+
+		///
+		/// ↑描画処理ここまで
+		///
+
+		// フレームの終了
+		Novice::EndFrame();
+
+		// ESCキーが押されたらループを抜ける
+		if (preKeys[DIK_ESCAPE] == 0 && keys[DIK_ESCAPE] != 0) {
+			break;
+		}
+	}
+	delete stageScene;
 	// ライブラリの終了
 	Novice::Finalize();
 	return 0;
