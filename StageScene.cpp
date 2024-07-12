@@ -42,38 +42,19 @@ void StageScene::Init()
 
 void StageScene::Update()
 {
-	if (keys[DIK_W]) {
+	if (Input::GetInstance()->TriggerKey(DIK_W)) {
 		playerPosY += -playerSpeedY;
 	}//上方向 下にもELSEを使ったら下が適応され続けてうえのスピードが使えなくなる//スピード表示用の数をｉｎｔして解決
-	if (keys[DIK_S]) {
+	if (Input::GetInstance()->TriggerKey(DIK_S)) {
 		playerPosY += playerSpeedY;
 	}	//下方向
-	if (keys[DIK_D]) {
+	if (Input::GetInstance()->TriggerKey(DIK_D)) {
 		playerPosX += playerSpeedX;
 	}//右方向　上に同じく
-	if (keys[DIK_A]) {
+	if (Input::GetInstance()->TriggerKey(DIK_A)) {
 		playerPosX += -playerSpeedX;
 	}//左方向
 	//-------------------------------------------------------player移動設定-----------//
-	if (keys[DIK_W]) {
-		screenSpeedY = -10;
-	}
-	else {
-		screenSpeedY = 0;
-	}//上方向 下にもELSEを使ったら下が適応され続けてうえのスピードが使えなくなる//スピード表示用の数をｉｎｔして解決
-	if (keys[DIK_S]) {
-		screenSpeedY = 10;
-	}	//下方向
-	if (keys[DIK_D]) {
-		screenSpeedX = 10;
-	}
-	else {
-		screenSpeedX = 0;
-	}//右方向　上に同じく
-	if (keys[DIK_A]) {
-		screenSpeedX = -10;
-	}//左方向
-	//－－－－－－－-------------------------------------プレイヤーの速度観測用ＳＰＥＥＤ-------------//
 	if (enemyAlive == true) {//敵が生きているとき、動く
 		enemyPosX += enemySpeed;
 	}
@@ -103,7 +84,7 @@ void StageScene::Update()
 	}
 	//------------壁の当たり判定、弾版------------------------------------------//
 
-	if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0 && bulletShot == false) {//ここをbulletShotに変えたら弾が止まる　解決　true(1)なので座標がずっとplayerPosXでとまってしまう
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && bulletShot == false) {//ここをbulletShotに変えたら弾が止まる　解決　true(1)なので座標がずっとplayerPosXでとまってしまう
 		//↑鍵　bulletShotが0のときしかうごかない
 		bulletPosX = playerPosX;//ここが機能してない解決、数が入ってはいたけど下のスピードに書き換えられてた
 		bulletPosY = playerPosY;
@@ -127,6 +108,7 @@ void StageScene::Update()
 	if (enemyAlive == false && enemyRespawnTimer <= 0) {//敵が死んだときとタイマーがゼロになった時に敵が復活
 		enemyAlive = true;
 		enemyRespawnTimer = 120;//タイマー初期化120フレーム
+		sceneNo = CLEAR;
 	}
 	if (enemyRespawnTimer < 120 && enemyRespawnTimer >= 30) {//30～120フレーム(残り時間)の時
 		explodeIsTrue = 1;//爆発を描画（true）
@@ -134,9 +116,7 @@ void StageScene::Update()
 	else {
 		explodeIsTrue = 0;//描画しない
 	}
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		sceneNo = CLEAR;
-	}
+	
 
 
 }
