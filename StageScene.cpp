@@ -128,7 +128,7 @@ void StageScene::Draw()
 		Novice::DrawTriangle(bulletPosX, bulletPosY - bulletR,
 			bulletPosX - bulletR, bulletPosY + bulletR,
 			bulletPosX + bulletR, bulletPosY + bulletR,
-			RED, kFillModeSolid);
+			BLUE, kFillModeSolid);
 	}
 	//弾------------------------------------------------------------------------------------↑
 	Novice::DrawBox(playerPosX, playerPosY, playerR, playerR, 0.0f, WHITE, kFillModeSolid);
