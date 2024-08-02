@@ -40,18 +40,20 @@ void StageScene::Init()
 
 }
 
+
 void StageScene::Update()
 {
-	if (Input::GetInstance()->TriggerKey(DIK_W)) {
+
+	if (Input::GetInstance()->PushKey(DIK_W)) {
 		playerPosY += -playerSpeedY;
 	}//上方向 下にもELSEを使ったら下が適応され続けてうえのスピードが使えなくなる//スピード表示用の数をｉｎｔして解決
-	if (Input::GetInstance()->TriggerKey(DIK_S)) {
+	if (Input::GetInstance()->PushKey(DIK_S)) {
 		playerPosY += playerSpeedY;
 	}	//下方向
-	if (Input::GetInstance()->TriggerKey(DIK_D)) {
+	if (Input::GetInstance()->PushKey(DIK_D)) {
 		playerPosX += playerSpeedX;
 	}//右方向　上に同じく
-	if (Input::GetInstance()->TriggerKey(DIK_A)) {
+	if (Input::GetInstance()->PushKey(DIK_A)) {
 		playerPosX += -playerSpeedX;
 	}//左方向
 	//-------------------------------------------------------player移動設定-----------//
