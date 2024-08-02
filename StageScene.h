@@ -40,5 +40,20 @@ private:
 	int explode;
 	bool explodeIsTrue;
 	//--------------------------------------------------------------------爆発のフラグ（爆発してるかどうか）
+	int backGroundFolest;
+	int backGroundPosY;
+	int backGroundSpeed;
+	int secondBackGroundPosY;
+	int prayer;
+	int altoBullet;
+	int prayerDamege;
+	int prayerFlame;
+	int prayerAnime;
+
+	int enemy;
+	int enemyAnime;
+	int enemyFlame;
+	int prayerR;
+
 
 };

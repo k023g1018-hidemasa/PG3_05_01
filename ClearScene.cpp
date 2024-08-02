@@ -2,6 +2,7 @@
 
 void ClearScene::Init()
 {
+	GAMECLEAR = Novice::LoadTexture("./img/nightmeaWin.png");
 }
 
 void ClearScene::Update()
@@ -13,5 +14,5 @@ void ClearScene::Update()
 
 void ClearScene::Draw()
 {
-	Novice::DrawBox(0, 0, wide, higth, 0.0f, GREEN, kFillModeSolid);
+	Novice::DrawSprite(0, 0, GAMECLEAR, 1.2f, 1.2f, 0.0f, WHITE);
 }

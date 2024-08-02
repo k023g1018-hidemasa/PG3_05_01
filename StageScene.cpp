@@ -34,15 +34,30 @@ void StageScene::Init()
 	 explode = Novice::LoadTexture("./explode.png");
 	 explodeIsTrue = 0;
 	//--------------------------------------------------------------------爆発のフラグ（爆発してるかどうか）
+	 backGroundFolest = Novice::LoadTexture("./img/backGroundFolest.png");//背景//テスト用seikou!!
+	 backGroundPosY = -720;
+	 backGroundSpeed = 10;
+	 secondBackGroundPosY = 0;
 
+	  prayer = Novice::LoadTexture("./img/altoBack.png");//自分
+	  altoBullet = Novice::LoadTexture("./img/altoBrett.png");//自分弾
+	  prayerDamege = Novice::LoadTexture("./img/altoDamege.png");//自分
+	  prayerFlame = 0;//自機のフレーム（ダメージ時）
+	  prayerAnime = 0;
 
-
+	  enemy = Novice::LoadTexture("./img/shyogos.png");//敵
+	  enemyAnime = 0;//敵のアニメーションをコマ送りするカウント
+	  enemyFlame = 0;
+	  prayerR = 16;
 
 }
 
 
 void StageScene::Update()
 {
+
+	backGroundPosY += backGroundSpeed;//一枚目
+	secondBackGroundPosY += backGroundSpeed;
 
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		playerPosY += -playerSpeedY;
@@ -60,7 +75,7 @@ void StageScene::Update()
 	if (enemyAlive == true) {//敵が生きているとき、動く
 		enemyPosX += enemySpeed;
 	}
-	if (enemyPosX > 1230) {//右の壁についたときに反転
+	if (enemyPosX > 750) {//右の壁についたときに反転
 		enemySpeed = -5;
 	}
 	if (enemyPosX < 50) {//左の壁についたとき反転
@@ -68,16 +83,16 @@ void StageScene::Update()
 	}
 
 	//--------------------------------------------------------敵の動き--------------------------------
-	if (playerPosX > 1230) {
+	if (playerPosX > 802) {
 		playerPosX = playerPosX - 10;
 	}
-	if (playerPosX < 0) {
+	if (playerPosX < -10) {
 		playerPosX = playerPosX + 10;
 	}
 	if (playerPosY > 670) {
 		playerPosY = playerPosY - 10;
 	}
-	if (playerPosY < 50) {
+	if (playerPosY < 300) {
 		playerPosY = playerPosY + 10;
 	}
 	//--------------------壁の当たり判定------------------------------------------//
@@ -125,18 +140,26 @@ void StageScene::Update()
 
 void StageScene::Draw()
 {
-	Novice::DrawBox(0, 0, wide, higth, 0.0f, RED, kFillModeSolid);
-	if (bulletShot) {
-		Novice::DrawTriangle(bulletPosX, bulletPosY - bulletR,
-			bulletPosX - bulletR, bulletPosY + bulletR,
-			bulletPosX + bulletR, bulletPosY + bulletR,
-			BLUE, kFillModeSolid);
+	if (backGroundPosY >= 720) {//画面の一番下に来たら
+		backGroundPosY = -720;//画面外の上に表示
+	}
+	Novice::DrawSprite(0, backGroundPosY, backGroundFolest, 2.0f, 2.0f, 0.0f, 0xffffffff);//一枚目//スタートは-720
+
+	if (secondBackGroundPosY >= 720) {
+		secondBackGroundPosY = -720;
+	}
+	Novice::DrawSprite(0, secondBackGroundPosY, backGroundFolest, 2.0f, 2.0f, 0.0f, 0xffffffff);//二枚目//スタートは0
+
+	//Novice::DrawBox(0, 0, wide, higth, 0.0f, RED, kFillModeSolid);
+	if (bulletShot == true) {
+		Novice::DrawSprite(bulletPosX + bulletR / 2, bulletPosY + bulletR / 2, altoBullet, 1.0f, 1.0f, .0, WHITE);//アルトの弾
 	}
 	//弾------------------------------------------------------------------------------------↑
-	Novice::DrawBox(playerPosX, playerPosY, playerR, playerR, 0.0f, WHITE, kFillModeSolid);
+	Novice::DrawSprite(playerPosX + prayerR / 2, playerPosY + prayerR / 2, prayer, 1.2f, 1.2f, .0, WHITE);
 	//自機-----------------------------------------------------------------↑
 
 	if (enemyAlive == true) {//生きているとき表示
+	Novice::DrawSpriteRect(enemyPosX , enemyPosY, enemyFlame, 0, 128, 128, enemy, 0.5f, 1.0f, 0.0f, WHITE);//ショゴス
 		//Novice::DrawBox(enemyPosX+enemyR/2, enemyPosY+enemyR/2, enemyR, enemyR, 0.0f, BLACK, kFillModeSolid);//sikaku
 		Novice::DrawEllipse(enemyPosX, enemyPosY, enemyR, enemyR, 0.0f, BLACK, kFillModeSolid);//sannkaku
 	}
@@ -158,6 +181,5 @@ void StageScene::Draw()
 	Novice::ScreenPrintf(20, 110, "playerRANDenemyR %f", sqrtf((float)bulletRANDenemyR));//岸先作　弾と敵の半径の距離
 	Novice::ScreenPrintf(20, 130, "RESframe%d bakuhatusiteiruka%d", enemyRespawnTimer, explodeIsTrue);
 	//----------------------------------------------表示画面↑
-
 
 }
