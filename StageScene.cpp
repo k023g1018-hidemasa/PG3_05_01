@@ -21,7 +21,7 @@ void StageScene::Init()
 	 enemyPosX = 400;
 	 enemyPosY = 100;
 	 enemySpeed = 5;
-	 enemyR = 20;
+	 enemyR = 32;
 	//-------------------------------------------------------敵の座標スピード半径--------------
 	 enemyAlive = true;
 	//----------------------------------------------------敵が生きているか-----------
@@ -158,10 +158,12 @@ void StageScene::Draw()
 	Novice::DrawSprite(playerPosX + prayerR / 2, playerPosY + prayerR / 2, prayer, 1.2f, 1.2f, .0, WHITE);
 	//自機-----------------------------------------------------------------↑
 
+
+
 	if (enemyAlive == true) {//生きているとき表示
-	Novice::DrawSpriteRect(enemyPosX , enemyPosY, enemyFlame, 0, 128, 128, enemy, 0.5f, 1.0f, 0.0f, WHITE);//ショゴス
+	Novice::DrawSpriteRect(enemyPosX-60 , enemyPosY-60, enemyFlame, 0, 128, 128, enemy, 0.5f, 1.0f, 0.0f, WHITE);//ショゴス
 		//Novice::DrawBox(enemyPosX+enemyR/2, enemyPosY+enemyR/2, enemyR, enemyR, 0.0f, BLACK, kFillModeSolid);//sikaku
-		Novice::DrawEllipse(enemyPosX, enemyPosY, enemyR, enemyR, 0.0f, BLACK, kFillModeSolid);//sannkaku
+		//Novice::DrawEllipse(enemyPosX, enemyPosY, enemyR, enemyR, 0.0f, BLACK, kFillModeSolid);//sannkaku
 	}
 	else if (enemyAlive == false) {//敵が死んだとき
 
@@ -173,13 +175,7 @@ void StageScene::Draw()
 	//敵－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－↑
 
 
-	Novice::ScreenPrintf(20, 10, "sousaWASD　　speedX%d/Y%d", screenSpeedX, screenSpeedY);//操作方法と自機のスピード
-	Novice::ScreenPrintf(20, 30, "posisyon X%d/Y%d", playerPosX, playerPosY);//自機の場所
-	Novice::ScreenPrintf(20, 50, "BaretP X%d/Y%d", bulletPosX, bulletPosY);//弾の場所
-	Novice::ScreenPrintf(20, 70, "Bullet %d", bulletShot);//弾は発射されているか？
-	Novice::ScreenPrintf(20, 90, "distance %f", sqrtf((float)distance));//弾と敵の距離
-	Novice::ScreenPrintf(20, 110, "playerRANDenemyR %f", sqrtf((float)bulletRANDenemyR));//岸先作　弾と敵の半径の距離
-	Novice::ScreenPrintf(20, 130, "RESframe%d bakuhatusiteiruka%d", enemyRespawnTimer, explodeIsTrue);
+	
 	//----------------------------------------------表示画面↑
 
 }
